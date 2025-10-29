@@ -1,27 +1,33 @@
----
-icon: hand-wave
-layout:
-  width: default
-  title:
-    visible: true
-  description:
-    visible: false
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
-  metadata:
-    visible: true
----
+# Introduction
 
-# Welcome
+Welcome to the OneKey dApp integration documentation. This repository covers browser providers, wallet aggregators, WalletConnect, and other software flows that help decentralized applications connect to the OneKey wallet ecosystem.
 
-Welcome to the GitBook starter template! Here you'll get an overview of all the amazing features GitBook offers to help you build beautiful, interactive documentation.
+{% hint style="info" %}
+Looking for hardware SDK or Air Gap SDK content? Visit the dedicated [OneKey Hardware SDK documentation](https://github.com/OneKeyHQ/hardware-js-sdk/tree/main/hardware-sdk-docs).
+{% endhint %}
 
-You'll see some of the best parts of GitBook in action — and find help on how you can turn this template into your own.
+### 🚀 Quick Navigation
 
-### Jump right in
+- [Developer Path Guide](guides/developer-guide.md): choose the right integration flow in minutes
+- [Web App Integration Guide](guides/web-app-integration-developer.md): end-to-end tutorial for browser-based dApps
+- [OneKey Provider](connect-to-software/webapp-connect-onekey/README.md): multi-chain EIP-1193 provider capabilities
+- [WalletConnect](connect-to-software/using-walletconnect/README.md): cross-platform deep linking and QR workflows
 
-<table data-view="cards"><thead><tr><th></th><th></th><th></th><th data-hidden data-card-cover data-type="files"></th><th data-hidden></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><h4><i class="fa-bolt">:bolt:</i></h4></td><td><strong>Quickstart</strong></td><td>Create your first site</td><td></td><td></td><td><a href="getting-started/quickstart.md">quickstart.md</a></td></tr><tr><td><h4><i class="fa-leaf">:leaf:</i></h4></td><td><strong>Editor basics</strong></td><td>Learn the basics of GitBook</td><td></td><td></td><td><a href="https://github.com/GitbookIO/gitbook-templates/blob/main/product-docs/broken-reference/README.md">https://github.com/GitbookIO/gitbook-templates/blob/main/product-docs/broken-reference/README.md</a></td></tr><tr><td><h4><i class="fa-globe-pointer">:globe-pointer:</i></h4></td><td><strong>Publish your docs</strong></td><td>Share your docs online</td><td></td><td></td><td><a href="getting-started/publish-your-docs.md">publish-your-docs.md</a></td></tr></tbody></table>
+### 🔍 Integration Highlights
+
+<table data-header-hidden><thead><tr><th width="250"></th><th width="250"></th><th width="250"></th><th width="250"></th></tr></thead><tbody><tr><td><div><figure><img src=".github/assets/image (26).png" alt=""><figcaption></figcaption></figure></div><p><a href="connect-to-software/compatible-with-metamask/"><strong>🔗 MetaMask Compatibility</strong></a><br>EIP-1193 compliant provider injection</p></td><td><div><figure><img src=".github/assets/image (25).png" alt="" width="188"><figcaption></figcaption></figure></div><p><a href="connect-to-software/support-wallet-kit/"><strong>🛠️ Wallet Aggregator Support</strong></a><br>RainbowKit, Web3Modal, Web3 Onboard, and more</p></td><td><div><figure><img src=".github/assets/image (28).png" alt=""><figcaption></figcaption></figure></div><p><a href="connect-to-software/webapp-connect-onekey/"><strong>⚡ Multi-chain Provider</strong></a><br>ETH, BTC, Solana, NEAR, and additional chains</p></td><td><div><figure><img src=".github/assets/image (29).png" alt="" width="188"><figcaption></figcaption></figure></div><p><a href="connect-to-software/using-walletconnect/"><strong>🔄 WalletConnect</strong></a><br>Cross-platform QR codes, deep links, and desktop pairing</p></td></tr></tbody></table>
+
+### 🎯 When to Use This Repository
+
+- You need to integrate the OneKey provider or popular wallet aggregators in a web dApp
+- You want consistent experiences across desktop browsers, mobile apps, and extensions
+- You plan to add hardware signing or software wallet support to existing Web3 flows
+
+### 📚 Related Resources
+
+- [OneKey GitHub Organization](https://github.com/OneKeyHQ)
+- [OneKey Product Site](https://onekey.so/)
+- [Help Center](https://help.onekey.so/hc)
+- [API Changelog & Issues](https://github.com/OneKeyHQ/hardware-js-sdk/issues)
+
+> 💡 Follow the guides in `guides/` step by step. If you get stuck, open an issue or start a discussion for timely support.
