@@ -18,12 +18,12 @@ This documentation helps you integrate OneKey software wallets into your dApp. I
 
 ## API references
 
-- Ethereum and EVM: `connect-to-software/webapp-connect-onekey/eth/`
-- Bitcoin: `connect-to-software/webapp-connect-onekey/btc/`
-- NEAR: `connect-to-software/webapp-connect-onekey/near/`
-- Solana: `connect-to-software/webapp-connect-onekey/solana/`
-- Nostr: `connect-to-software/webapp-connect-onekey/nostr/`
-- WebLN: `connect-to-software/webapp-connect-onekey/webln/`
+- [Ethereum and EVM](connect-to-software/webapp-connect-onekey/eth/README.md)
+- [Bitcoin](connect-to-software/webapp-connect-onekey/btc/README.md)
+- [NEAR](connect-to-software/webapp-connect-onekey/near/README.md)
+- [Solana](connect-to-software/webapp-connect-onekey/solana/README.md)
+- [Nostr](connect-to-software/webapp-connect-onekey/nostr/README.md)
+- [WebLN](connect-to-software/webapp-connect-onekey/webln/README.md)
 
 ## Support
 

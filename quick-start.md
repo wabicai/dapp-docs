@@ -10,10 +10,10 @@ This page gives you a minimal, production‑friendly path to get OneKey working 
 
 ## 2) Pick your route
 
-- OneKey Provider (EIP‑1193): multi‑chain provider for web dApps — see `connect-to-software/webapp-connect-onekey/`
-- Wallet Aggregators: RainbowKit / Web3Modal / Web3 Onboard — see `connect-to-software/support-wallet-kit/`
-- WalletConnect: cross‑platform deep link / QR — see `connect-to-software/using-walletconnect/`
-- MetaMask Compatibility: rely on `window.ethereum` — see `connect-to-software/compatible-with-metamask/`
+- OneKey Provider (EIP‑1193): multi‑chain provider for web dApps — see [OneKey Provider](connect-to-software/webapp-connect-onekey/README.md)
+- Wallet Aggregators: RainbowKit / Web3Modal / Web3 Onboard — see [Wallet Aggregators](connect-to-software/support-wallet-kit/README.md)
+- WalletConnect: cross‑platform deep link / QR — see [WalletConnect](connect-to-software/using-walletconnect/README.md)
+- MetaMask Compatibility: rely on `window.ethereum` — see [MetaMask Compatibility](connect-to-software/compatible-with-metamask/README.md)
 
 ## 3) Minimal example (EVM)
 
@@ -41,13 +41,13 @@ This page gives you a minimal, production‑friendly path to get OneKey working 
 
 ## 4) Go deeper (per‑chain)
 
-- EVM: `connect-to-software/webapp-connect-onekey/eth/`
-  - Provider API, RPC API, Accounts, Send Tx, Sign Data
-- Bitcoin: `connect-to-software/webapp-connect-onekey/btc/`
-- NEAR: `connect-to-software/webapp-connect-onekey/near/`
-- Solana: `connect-to-software/webapp-connect-onekey/solana/`
-- Nostr: `connect-to-software/webapp-connect-onekey/nostr/`
-- WebLN: `connect-to-software/webapp-connect-onekey/webln/`
+- EVM: [Ethereum & EVM](connect-to-software/webapp-connect-onekey/eth/README.md)
+  - [Provider API](connect-to-software/webapp-connect-onekey/eth/provider-api.md), [RPC API](connect-to-software/webapp-connect-onekey/eth/rpc-api.md), [Accessing Accounts](connect-to-software/webapp-connect-onekey/eth/accessing-accounts.md), [Sending Transactions](connect-to-software/webapp-connect-onekey/eth/sending-transactions.md), [Signing Data](connect-to-software/webapp-connect-onekey/eth/signing-data.md)
+- Bitcoin: [Bitcoin](connect-to-software/webapp-connect-onekey/btc/README.md)
+- NEAR: [NEAR](connect-to-software/webapp-connect-onekey/near/README.md)
+- Solana: [Solana](connect-to-software/webapp-connect-onekey/solana/README.md)
+- Nostr: [Nostr](connect-to-software/webapp-connect-onekey/nostr/README.md)
+- WebLN: [WebLN](connect-to-software/webapp-connect-onekey/webln/README.md)
 
 ## 5) Troubleshooting (quick)
 

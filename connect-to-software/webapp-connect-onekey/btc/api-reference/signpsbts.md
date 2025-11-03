@@ -23,6 +23,7 @@ async function signPsbts(
             address?: string;
             publicKey?: string;
             sighashTypes?: number[];
+            disableTweakSigner?: boolean;
             useTweakedSigner?: boolean;
         }>;
     },
@@ -39,7 +40,8 @@ async function signPsbts(
     * `address` — _optional_ `string` Which corresponding private key to use for signing (specify either address or publicKey)
     * `publicKey` — _optional_ `string` Which corresponding private key to use for signing (specify either address or publicKey)
     * `sighashTypes` — _optional_ `number[]` Optional sighash types
-    * `useTweakedSigner` — _optional_ `boolean` Force whether to use tweaked signer, has higher priority than disableTweakSigner
+    * `disableTweakSigner` — _optional_ `boolean` Default is `false`. Set `true` to use original private key when signing Taproot inputs
+    * `useTweakedSigner` — _optional_ `boolean` Force whether to use tweaked signer; higher priority than `disableTweakSigner`
 
 #### Returns
 
@@ -58,11 +60,18 @@ try {
 
     const signeds = await provider.signPsbts(psbtHexs, {
         autoFinalized: true,
-        toSignInputs: [{
-            index: 0,
-            publicKey: "02abc...",
-            useTweakedSigner: true
-        }]
+        toSignInputs: [
+            {
+                index: 0,
+                publicKey: "02abc...",
+                useTweakedSigner: true
+            },
+            {
+                index: 1,
+                address: "bc1p...",
+                disableTweakSigner: true
+            }
+        ]
     });
 
     console.log(signeds);
