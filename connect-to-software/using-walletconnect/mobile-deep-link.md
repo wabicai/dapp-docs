@@ -1,89 +1,64 @@
-# Mobile Deep Link Integration
+# Mobile Deep Link Integration (Three Methods)
 
-## Overview
+We recommend using the custom scheme Deep Link (`onekey-wallet://`) and the raw WalletConnect URI (`wc:`). Use Universal Link as a fallback. Full demo code is available here:
 
-OneKey supports two URL schemes for mobile DApp connections (Telegram Mini Apps, mobile web DApps, etc.).
+https://github.com/OneKeyHQ/hardware-js-sdk/tree/onekey/packages/connect-examples/react-native-demo
 
-| Type | URL | Use Case |
-|------|-----|----------|
-| **Deep Link (Recommended)** | `onekey-wallet://` | Directly opens OneKey app |
-| **Universal Link** | `https://app.onekey.so/wc/connect` | Fallback when Deep Link unavailable |
+## Methods at a Glance
 
-## Quick Start
+- Method 1 (Recommended): Deep Link custom scheme — directly opens the OneKey app
+  - Format: `onekey-wallet://wc?uri={encoded_wc_uri}`
+- Method 2 (Recommended): Raw WalletConnect URI — handled by the OS/OneKey
+  - Format: `wc:xxxxx@2?relay-protocol=irn&symKey=...`
+- Method 3 (Fallback): Universal Link — works when the custom scheme is unavailable
+  - Format: `https://app.onekey.so/wc/connect/wc?uri={encoded_wc_uri}`
 
-### Basic Usage
+`{encoded_wc_uri}` must be created via `encodeURIComponent(wcUri)`.
+
+## Quick Start (Web Minimal Example)
 
 ```javascript
+// Assume you've obtained a WalletConnect V2 URI (wcUri)
 const wcUri = 'wc:xxxxx@2?relay-protocol=irn&symKey=...';
 
 // Method 1: Deep Link (Recommended)
 const deepLink = `onekey-wallet://wc?uri=${encodeURIComponent(wcUri)}`;
 window.open(deepLink, '_blank');
 
-// Method 2: Universal Link (Fallback)
+// Method 3: Universal Link (Fallback)
 const universalLink = `https://app.onekey.so/wc/connect/wc?uri=${encodeURIComponent(wcUri)}`;
 window.open(universalLink, '_blank');
+
+// Method 2: Raw WalletConnect URI (Recommended)
+window.open(wcUri, '_blank');
 ```
 
-### Telegram Mini App
+## React Native / Expo (Minimal)
 
-```javascript
-import { openLink } from '@telegram-apps/sdk';
-import { SignClient } from '@walletconnect/sign-client';
+For full demo code, see the React Native demo repository above. Minimal openers:
 
-// Initialize WalletConnect
-const client = await SignClient.init({
-  projectId: 'YOUR_PROJECT_ID',
-  metadata: {
-    name: 'My Telegram DApp',
-    description: 'Telegram Mini App',
-    url: 'https://t.me/your_bot',
-    icons: ['https://your-icon.png']
-  }
-});
+```ts
+import { Linking } from 'react-native';
 
-// Connect to OneKey
-const { uri, approval } = await client.connect({
-  requiredNamespaces: {
-    eip155: {
-      methods: ['eth_sendTransaction', 'personal_sign'],
-      chains: ['eip155:1'],
-      events: ['chainChanged', 'accountsChanged']
-    }
-  }
-});
+// Deep Link (recommended)
+Linking.openURL(`onekey-wallet://wc?uri=${encodeURIComponent(wcUri)}`);
 
-// Open OneKey with Deep Link
-if (uri) {
-  const deepLink = `onekey-wallet://wc?uri=${encodeURIComponent(uri)}`;
-  openLink(deepLink);
+// Raw WalletConnect (recommended)
+Linking.openURL(wcUri);
 
-  const session = await approval();
-  console.log('Connected:', session);
-}
+// Universal Link (fallback)
+Linking.openURL(`https://app.onekey.so/wc/connect/wc?uri=${encodeURIComponent(wcUri)}`);
 ```
 
-## WalletConnect Configuration
+## Sample URIs (Copy-Paste Test)
 
-```javascript
-import { createWeb3Modal } from '@web3modal/wagmi';
-
-createWeb3Modal({
-  projectId: 'YOUR_PROJECT_ID',
-  chains: [mainnet],
-
-  mobileWallets: [{
-    id: 'onekey',
-    name: 'OneKey',
-    links: {
-      native: 'onekey-wallet://',              // Primary
-      universal: 'https://app.onekey.so/wc/connect'  // Fallback
-    }
-  }]
-});
+```
+Deep Link       onekey-wallet://wc?uri=<WalletConnectURI>
+Universal Link  https://app.onekey.so/wc/connect/wc?uri=<WalletConnectURI>
+WalletConnect   wc:6b18a69c27df54b4c228e0ff60218ba460a4994aa5775963f6f0ee354b629afe@2?relay-protocol=irn&symKey=99f6e5fa2bda94c704be8d7adbc2643b861ef49dbe09e0af26d3713e219b4355
 ```
 
-## Platform Configuration
+## Mobile Platform Configuration
 
 ### iOS (Info.plist)
 
@@ -92,6 +67,10 @@ createWeb3Modal({
 <array>
   <string>onekey-wallet</string>
   <string>wc</string>
+  <!-- If your app has a custom scheme, register it here as well -->
+  <!-- <string>your-app</string> -->
+  <!-- <string>your-app-staging</string> -->
+  <!-- <string>your-app-dev</string> -->
 </array>
 
 <key>com.apple.developer.associated-domains</key>
@@ -104,7 +83,7 @@ createWeb3Modal({
 
 ```xml
 <activity android:name=".MainActivity">
-  <!-- Deep Link -->
+  <!-- Deep Link custom scheme -->
   <intent-filter>
     <action android:name="android.intent.action.VIEW" />
     <category android:name="android.intent.category.DEFAULT" />
@@ -112,7 +91,7 @@ createWeb3Modal({
     <data android:scheme="onekey-wallet" />
   </intent-filter>
 
-  <!-- Universal Link -->
+  <!-- Universal Link fallback (enable autoVerify for best UX) -->
   <intent-filter android:autoVerify="true">
     <action android:name="android.intent.action.VIEW" />
     <category android:name="android.intent.category.DEFAULT" />
@@ -122,40 +101,20 @@ createWeb3Modal({
 </activity>
 ```
 
-## React Native / Expo
+## Key Points & Best Practices
 
-```javascript
-import { Linking } from 'react-native';
+- Always `encodeURIComponent` the `wcUri` before injecting it into URLs.
+- Recommended order: Deep Link (fast) or Raw WalletConnect (direct) first, Universal Link as a fallback.
+- URI length limits: custom schemes have OS-dependent limits (iOS ~2K). Keep payloads concise.
+- Test on real devices: simulators/dev mode can differ from production behavior.
+- In Expo dev mode, the initial URL is `exp://...`; ignore it to avoid noise.
 
-async function connectOneKey(wcUri) {
-  const deepLink = `onekey-wallet://wc?uri=${encodeURIComponent(wcUri)}`;
+## Related Demo / Code
 
-  const canOpen = await Linking.canOpenURL(deepLink);
-  if (canOpen) {
-    await Linking.openURL(deepLink);
-  } else {
-    // Fallback to Universal Link
-    const universalLink = `https://app.onekey.so/wc/connect/wc?uri=${encodeURIComponent(wcUri)}`;
-    await Linking.openURL(universalLink);
-  }
-}
-```
+- React Native demo (full examples):
+  - https://github.com/OneKeyHQ/hardware-js-sdk/tree/onekey/packages/connect-examples/react-native-demo
 
-## Demo Project
+## Support & Feedback
 
-Complete working example with iOS/Android configurations:
-
-**GitHub**: https://github.com/wabicai?tab=repositories
-
-## Key Points
-
-1. **Always encode WalletConnect URI**: Use `encodeURIComponent(wcUri)`
-2. **Priority**: Deep Link first, Universal Link as fallback
-3. **URL Format**:
-   - Deep Link: `onekey-wallet://wc?uri={encoded_wc_uri}`
-   - Universal Link: `https://app.onekey.so/wc/connect/wc?uri={encoded_wc_uri}`
-4. **Testing**: Test on real devices for best results
-
-## Support
-
-- [GitHub Issues](https://github.com/OneKeyHQ/OneKey-Hardware-JS-SDK/issues)
+- File issues in the `OneKey-Hardware-JS-SDK` repository.
+- Please include: device OS version, OneKey app version, sample URI, steps to reproduce, and a short screen recording if possible.
