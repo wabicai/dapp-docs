@@ -1,4 +1,4 @@
-# Using WalletConnect
+# JavaScript + WalletConnect
 
 WalletConnect enables cross‑platform connections between your DApp and the OneKey app on mobile and desktop. This page gives you a minimal, production‑oriented entry and links to deeper platform guides.
 
@@ -65,20 +65,16 @@ console.log('Connected:', session);
 
 > Mobile/TMA specific opening (Telegram Mini Apps / React Native) requires different link openers. See Mobile Deep Link Guide below.
 
-## Mobile Deep Link Guide
+## Deeplinks guide
 
-Learn how to launch OneKey from mobile web, RN/Expo, or TMA with three link types, including iOS/Android configs and a full demo screen.
+For a complete, production‑oriented deeplink guide (mobile web, RN/Expo, TMA), see:
 
-- Deep Link custom scheme: `onekey-wallet://`
-- Raw WalletConnect URI: `wc:...`
-- Universal Link fallback: `https://app.onekey.so/wc/connect/wc?uri=...`
-
-[📱 Mobile Deep Link Integration →](mobile-deep-link.md)
+- Use deeplinks: guides/use-deeplinks.md
+- Link types: custom scheme `onekey-wallet://`, raw WC `wc:...`, Universal Link fallback `https://app.onekey.so/...`
 
 ## Chain‑Specific Examples
 
 - EVM (ETH): `using-walletconnect/eth.md`
-- Aptos: `using-walletconnect/aptos/README.md`
 
 ## Best Practices
 

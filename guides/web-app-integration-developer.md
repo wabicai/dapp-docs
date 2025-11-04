@@ -1,65 +1,107 @@
 ---
-description: Integrate web dApps with OneKey using the Provider API, wallet aggregators, or WalletConnect
+description: Web app integration with OneKey using deeplinks and WalletConnect — patterns and fallbacks
 ---
 
-# Web App Integration Developer Guide
+# Web app integration (deeplinks)
 
-> Start with the minimal runnable snippet in [Quick Start](../quick-start.md) (detect → connect). This page focuses on options and references for production integration.
+This guide targets web/H5 dApps. It shows how to open the OneKey app from the browser using deeplinks that carry a WalletConnect URI, and how to design reliable fallbacks across platforms.
 
-## Started
+- Overview: guides/developer-guide.md
+- WalletConnect details: connect-to-software/using-walletconnect/README.md
 
-To develop for OneKey Browser Extension or Mobile Apps, install OneKey on your development machine.
-- Download: https://onekey.so/download?client=browserExtension
+## Flow
 
-This guide assumes intermediate knowledge of HTML, CSS, and JavaScript.
+1) Create a WalletConnect `uri`
+2) Choose an opener based on the runtime (deeplink / raw WC URI / Universal Link)
+3) Wait for user approval in OneKey → receive a session
+4) Use per‑chain provider/RPC to interact with accounts
 
-Once OneKey is installed and running, new browser tabs expose a `window.$onekey` object. Your website will interact with OneKey through this provider.
+## Code template (EVM example)
 
-## Intro
+```ts
+import { SignClient } from '@walletconnect/sign-client';
 
-As a dApp developer, you have the following options to connect to OneKey:
+export async function connectWithOneKey() {
+  const client = await SignClient.init({
+    projectId: 'YOUR_PROJECT_ID',
+    metadata: {
+      name: 'My DApp',
+      description: 'WalletConnect integration',
+      url: 'https://example.com',
+      icons: ['https://example.com/icon.png'],
+    },
+  });
 
-- OneKey Provider API (multi‑chain)
-- Wallet aggregator GUIs/SDKs (RainbowKit, Web3Modal, Web3 Onboard, etc.)
-- WalletConnect (QR / deep link, cross‑platform)
+  const { uri, approval } = await client.connect({
+    requiredNamespaces: {
+      eip155: {
+        methods: ['eth_sendTransaction', 'personal_sign'],
+        chains: ['eip155:1'],
+        events: ['chainChanged', 'accountsChanged'],
+      },
+    },
+  });
 
-## OneKey Provider API
+  if (uri) {
+    const deepLink = `onekey-wallet://wc?uri=${encodeURIComponent(uri)}`;
+    const universal = `https://app.onekey.so/wc/connect/wc?uri=${encodeURIComponent(uri)}`;
 
-OneKey injects a provider into websites, allowing them to request blockchain operations via OneKey. For example, the Ethereum Provider API follows EIP‑1193.
+    // Mobile-first: try the custom scheme; fallback to Universal Link
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      try {
+        // Safari-safe: prefer location.href; use timeout to fallback
+        window.location.href = deepLink;
+        setTimeout(() => {
+          window.location.href = universal;
+        }, 1500);
+      } catch (e) {
+        window.location.href = universal;
+      }
+    } else {
+      // Desktop: prefer showing a QR via your UI or an aggregator.
+      // If you still want to attempt a link, open Universal Link in a new tab.
+      window.open(universal, '_blank');
+    }
+  }
 
-- Entry: [OneKey Provider](../connect-to-software/webapp-connect-onekey/README.md)
-- Examples: [ETH](../connect-to-software/webapp-connect-onekey/eth/README.md), [SOL](../connect-to-software/webapp-connect-onekey/solana/README.md), [NEAR](../connect-to-software/webapp-connect-onekey/near/README.md), [BTC](../connect-to-software/webapp-connect-onekey/btc/README.md), [Nostr](../connect-to-software/webapp-connect-onekey/nostr/README.md), [WebLN](../connect-to-software/webapp-connect-onekey/webln/README.md)
+  const session = await approval();
+  return session;
+}
+```
 
-## Supported Clients
+## Platform notes
 
-| Platform | Client | dApp Support |
-|---|---|---|
-| Browser | OneKey Chrome extension | Connect via injected Provider |
-| Browser | OneKey Edge extension | Connect via injected Provider |
-| Desktop | OneKey App (Windows/macOS/Linux) | Built‑in Browser integration |
-| Mobile  | OneKey App (iOS/Android) | Built‑in Browser + WalletConnect |
+- iOS Safari: stricter popup rules — use `location.href = deepLink` and fallback with a short timeout
+- Android browsers: custom schemes generally work well
+- Embedded WebViews: open external links only on user gesture
+- Telegram Mini Apps: use the platform’s external opener on user interaction
 
-## Use Wallet Aggregator GUIs and SDKs
+## Fallback UX (recommended)
 
-Aggregators that support OneKey. If you already use an aggregator, see the docs for best practices.
+- Deeplink button (mobile‑first): "Open in OneKey"
+- QR (desktop‑first): scan with the OneKey mobile app
+- Universal Link button: backup when custom schemes are blocked
+- Store link: offer to download OneKey if not installed
 
-- MetaMask compatibility: [Compatible with Metamask](../connect-to-software/compatible-with-metamask/README.md)
-- Web3 Onboard: [Web3 Onboard](../connect-to-software/support-wallet-kit/web3-onboard.md)
-- RainbowKit: [RainbowKit](../connect-to-software/support-wallet-kit/rainbowkit.md)
-- Web3Modal: [Web3Modal](../connect-to-software/support-wallet-kit/web3modal.md)
-- Aptos Wallet Adapter: [Aptos Wallet Adapter](../connect-to-software/support-wallet-kit/aptos-wallet-adapter.md)
+## Using aggregators (optional)
 
-## WalletConnect Integration
+If you already use an aggregator (RainbowKit / Web3Modal / Web3 Onboard), reuse its WalletConnect/mobile open logic and include OneKey as a featured wallet:
 
-For cross‑platform connections, use WalletConnect. Users connect the OneKey app by scanning a QR code or using a mobile deep link.
+- RainbowKit: connect-to-software/wallet-kit/rainbowkit.md
+- Web3Modal: connect-to-software/wallet-kit/web3modal.md
+- Web3 Onboard: connect-to-software/wallet-kit/web3-onboard.md
 
-- Entry: [WalletConnect](../connect-to-software/using-walletconnect/README.md)
-- Mobile deep link: [Mobile Deep Link](../connect-to-software/using-walletconnect/mobile-deep-link.md)
-- EVM example: [ETH](../connect-to-software/using-walletconnect/eth.md)
-- Aptos example: [APTOS](../connect-to-software/using-walletconnect/aptos/README.md)
+## After session established
 
-## Next Steps
+- For EVM, use EIP‑1193 provider methods (`eth_requestAccounts`, `eth_sendTransaction`, `personal_sign`, ...)
+- For other chains, use the chain‑specific provider/RPC
 
-- Minimal runnable example: [Quick Start](../quick-start.md)
-- Per‑chain APIs: see [OneKey Provider APIs](../connect-to-software/webapp-connect-onekey/README.md)
-- Troubleshooting: provider detection, user rejection, hex encoding — see [Quick Start](../quick-start.md)
+Entry: connect-to-software/webapp-connect-onekey/README.md
+
+## Troubleshooting
+
+- Deeplink doesn’t open: ensure OneKey is installed; try Universal Link; ensure it’s user‑initiated
+- Universal Link stays in browser: use QR fallback; associated domain configs are app‑side
+- WalletConnect handshake fails: verify `projectId` and connectivity; simplify `requiredNamespaces`
+- URI too long: reduce methods/events/chains; avoid extra payload in query strings

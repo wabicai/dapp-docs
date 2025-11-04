@@ -11,10 +11,15 @@ This documentation helps you integrate OneKey software wallets into your dApp. I
 
 ## Integration recipes
 
-- MetaMask compatibility: [Compatible with Metamask](connect-to-software/compatible-with-metamask/README.md)
-- Wallet aggregators: [Wallet Aggregators](connect-to-software/support-wallet-kit/README.md)
-- OneKey Provider (multi‑chain): [Overview](connect-to-software/webapp-connect-onekey/README.md)
-- WalletConnect: [Using WalletConnect](connect-to-software/using-walletconnect/README.md)
+- Connect to OneKey: [Overview](connect-to-software/README.md)
+- JavaScript + MetaMask (Recommended): [Docs](connect-to-software/compatible-with-metamask/README.md)
+- JavaScript + OneKey Provider (pure JS): [Docs](connect-to-software/webapp-connect-onekey/README.md)
+- Wallet Kit: [Index](connect-to-software/wallet-kit/README.md)
+  - JavaScript + Web3 Onboard (EVM): [Guide](connect-to-software/wallet-kit/web3-onboard.md)
+  - JavaScript + RainbowKit (EVM): [Guide](connect-to-software/wallet-kit/rainbowkit.md)
+  - JavaScript + Web3Modal (EVM): [Guide](connect-to-software/wallet-kit/web3modal.md)
+  - JavaScript + Aptos Wallet Adapter (Aptos): [Guide](connect-to-software/wallet-kit/aptos-wallet-adapter.md)
+  - JavaScript + WalletConnect: [Guide](connect-to-software/using-walletconnect/README.md)
 
 ## API references
 

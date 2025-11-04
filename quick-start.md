@@ -11,7 +11,7 @@ This page gives you a minimal, production‑friendly path to get OneKey working 
 ## 2) Pick your route
 
 - OneKey Provider (EIP‑1193): multi‑chain provider for web dApps — see [OneKey Provider](connect-to-software/webapp-connect-onekey/README.md)
-- Wallet Aggregators: RainbowKit / Web3Modal / Web3 Onboard — see [Wallet Aggregators](connect-to-software/support-wallet-kit/README.md)
+- Wallet Kit: RainbowKit / Web3Modal / Web3 Onboard — see [Wallet Kit](connect-to-software/wallet-kit/README.md)
 - WalletConnect: cross‑platform deep link / QR — see [WalletConnect](connect-to-software/using-walletconnect/README.md)
 - MetaMask Compatibility: rely on `window.ethereum` — see [MetaMask Compatibility](connect-to-software/compatible-with-metamask/README.md)
 
