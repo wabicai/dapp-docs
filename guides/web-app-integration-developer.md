@@ -1,22 +1,21 @@
 ---
-description: Web app integration with OneKey using deeplinks and WalletConnect — patterns and fallbacks
+description: Web/H5 deeplinks — open OneKey with a WalletConnect URI and provide robust fallbacks
 ---
 
 # Web app integration (deeplinks)
 
-This guide targets web/H5 dApps. It shows how to open the OneKey app from the browser using deeplinks that carry a WalletConnect URI, and how to design reliable fallbacks across platforms.
+This guide targets web/H5 dApps. It shows how to open OneKey from the browser using a deeplink that carries a WalletConnect URI, and how to design robust fallbacks across platforms.
 
 - Overview: guides/developer-guide.md
-- WalletConnect details: connect-to-software/using-walletconnect/README.md
 
 ## Flow
 
 1) Create a WalletConnect `uri`
-2) Choose an opener based on the runtime (deeplink / raw WC URI / Universal Link)
-3) Wait for user approval in OneKey → receive a session
+2) Choose an opener based on the runtime (deeplink/raw URI/Universal Link)
+3) User approves in OneKey → receive a session
 4) Use per‑chain provider/RPC to interact with accounts
 
-## Code template (EVM example)
+## Code template (EVM)
 
 ```ts
 import { SignClient } from '@walletconnect/sign-client';
@@ -45,22 +44,11 @@ export async function connectWithOneKey() {
   if (uri) {
     const deepLink = `onekey-wallet://wc?uri=${encodeURIComponent(uri)}`;
     const universal = `https://app.onekey.so/wc/connect/wc?uri=${encodeURIComponent(uri)}`;
-
-    // Mobile-first: try the custom scheme; fallback to Universal Link
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     if (isMobile) {
-      try {
-        // Safari-safe: prefer location.href; use timeout to fallback
-        window.location.href = deepLink;
-        setTimeout(() => {
-          window.location.href = universal;
-        }, 1500);
-      } catch (e) {
-        window.location.href = universal;
-      }
+      window.location.href = deepLink;
+      setTimeout(() => { window.location.href = universal; }, 1500);
     } else {
-      // Desktop: prefer showing a QR via your UI or an aggregator.
-      // If you still want to attempt a link, open Universal Link in a new tab.
       window.open(universal, '_blank');
     }
   }
@@ -72,36 +60,32 @@ export async function connectWithOneKey() {
 
 ## Platform notes
 
-- iOS Safari: stricter popup rules — use `location.href = deepLink` and fallback with a short timeout
+- iOS Safari: stricter popup rules — prefer `location.href = deepLink` with a short timeout fallback
 - Android browsers: custom schemes generally work well
-- Embedded WebViews: open external links only on user gesture
+- Embedded WebViews: open external links on user gesture
 - Telegram Mini Apps: use the platform’s external opener on user interaction
 
 ## Fallback UX (recommended)
 
-- Deeplink button (mobile‑first): "Open in OneKey"
+- Deeplink button (mobile‑first): “Open in OneKey”
 - QR (desktop‑first): scan with the OneKey mobile app
-- Universal Link button: backup when custom schemes are blocked
+- Universal Link button: when custom schemes are blocked
 - Store link: offer to download OneKey if not installed
 
-## Using aggregators (optional)
+## About aggregators
 
-If you already use an aggregator (RainbowKit / Web3Modal / Web3 Onboard), reuse its WalletConnect/mobile open logic and include OneKey as a featured wallet:
-
-- RainbowKit: connect-to-software/wallet-kit/rainbowkit.md
-- Web3Modal: connect-to-software/wallet-kit/web3modal.md
-- Web3 Onboard: connect-to-software/wallet-kit/web3-onboard.md
+To keep this doc lean, we don’t provide a dedicated aggregator section. If your project already integrates RainbowKit/Web3Modal/Web3 Onboard, prioritize OneKey in their mobile‑open logic.
 
 ## After session established
 
-- For EVM, use EIP‑1193 provider methods (`eth_requestAccounts`, `eth_sendTransaction`, `personal_sign`, ...)
-- For other chains, use the chain‑specific provider/RPC
+- EVM: use the EIP‑1193 provider (`eth_requestAccounts`, `eth_sendTransaction`, `personal_sign`, ...)
+- Other chains: use each chain’s provider/RPC
 
 Entry: connect-to-software/webapp-connect-onekey/README.md
 
 ## Troubleshooting
 
-- Deeplink doesn’t open: ensure OneKey is installed; try Universal Link; ensure it’s user‑initiated
-- Universal Link stays in browser: use QR fallback; associated domain configs are app‑side
+- Deeplink doesn’t open: ensure OneKey is installed; try Universal Link; ensure user‑initiated action
+- Universal Link stays in browser: use QR fallback; associated domain config is app‑side
 - WalletConnect handshake fails: verify `projectId` and connectivity; simplify `requiredNamespaces`
 - URI too long: reduce methods/events/chains; avoid extra payload in query strings

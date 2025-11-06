@@ -1,88 +1,71 @@
 ---
-description: Use deeplinks to connect users to OneKey across platforms with WalletConnect
+description: Open OneKey with deeplinks across platforms using a WalletConnect URI (MetaMask-style, simplified)
 ---
 
 # Use deeplinks
 
-This guide shows how to open the OneKey app from web (mobile/desktop) and cross‑platform containers using deeplinks that carry a WalletConnect URI.
+This guide shows how to open the OneKey app from mobile web/WebViews using deeplinks that carry a WalletConnect URI. It mirrors the minimal pattern from MetaMask’s docs.
 
-- Works in mobile browsers, WebViews, React Native/Expo, Telegram Mini Apps, etc.
-- Keep a fallback (Universal Link or QR) for reliable UX.
-
-## When to use deeplinks
-
-- You need to jump from a mobile web page or in‑app WebView to OneKey
-- You want a single flow that works across iOS and Android
-- You use an aggregator or WalletConnect already and want consistent UX
+- Where: mobile browsers, WebViews, React Native/Expo, Telegram Mini Apps, etc.
+- Always keep a fallback (Universal Link or QR)
 
 ## Link types and priority
 
-1) Custom scheme (recommended)
-- `onekey-wallet://wc?uri={encoded_wc_uri}`
-- Best on mobile to directly open the OneKey app
+1) Custom scheme (preferred)
+- `onekey-wallet://wc?uri={encodeURIComponent(wcUri)}`
 
-2) Raw WalletConnect URI (recommended)
+2) Raw WalletConnect URI (optional)
 - `wc:xxxxx@2?relay-protocol=irn&symKey=...`
-- Some runtimes open raw WC URIs directly
 
-3) Universal link (fallback)
-- `https://app.onekey.so/wc/connect/wc?uri={encoded_wc_uri}`
-- Use when custom schemes are blocked by the environment
+3) Universal Link (fallback)
+- `https://app.onekey.so/wc/connect/wc?uri={encodeURIComponent(wcUri)}`
 
-Always wrap the URI in `encodeURIComponent(wcUri)` when placing into a query string.
+Note: Always `encodeURIComponent` when putting the URI in a query string.
 
-## Quick start (EVM example)
+## Quick example (EVM)
 
 ```ts
 import { SignClient } from '@walletconnect/sign-client';
 
 const client = await SignClient.init({
   projectId: 'YOUR_PROJECT_ID',
-  metadata: {
-    name: 'My DApp',
-    description: 'WalletConnect integration',
-    url: 'https://example.com',
-    icons: ['https://example.com/icon.png'],
-  },
+  metadata: { name: 'My DApp', description: 'WalletConnect', url: 'https://example.com', icons: ['https://example.com/icon.png'] },
 });
 
 const { uri, approval } = await client.connect({
-  requiredNamespaces: {
-    eip155: {
-      methods: ['eth_sendTransaction', 'personal_sign'],
-      chains: ['eip155:1'],
-      events: ['chainChanged', 'accountsChanged'],
-    },
-  },
+  requiredNamespaces: { eip155: { methods: ['eth_sendTransaction', 'personal_sign'], chains: ['eip155:1'], events: ['chainChanged', 'accountsChanged'] } },
 });
 
 if (uri) {
-  const deepLink = `onekey-wallet://wc?uri=${encodeURIComponent(uri)}`;      // preferred
-  const raw = uri;                                                           // alternative
-  const universal = `https://app.onekey.so/wc/connect/wc?uri=${encodeURIComponent(uri)}`; // fallback
-  window.open(deepLink, '_blank');
+  const deepLink = `onekey-wallet://wc?uri=${encodeURIComponent(uri)}`;
+  const universal = `https://app.onekey.so/wc/connect/wc?uri=${encodeURIComponent(uri)}`;
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if (isMobile) {
+    window.location.href = deepLink;
+    setTimeout(() => { window.location.href = universal; }, 1500);
+  } else {
+    // Desktop: prefer QR; if linking, open Universal Link
+    window.open(universal, '_blank');
+  }
 }
 
 const session = await approval();
-console.log('Connected:', session);
 ```
 
-## Platform guidance
+## Platform notes
 
-- iOS Safari: prefer `location.href = deepLink`; use a short timeout to fallback to the Universal Link
-- Android browsers: custom schemes usually work well
-- WebViews / app containers: require a user gesture to open external links
-- Desktop: prefer QR; offer a "Continue on mobile" button with the Universal Link
+- iOS Safari: prefer `location.href = deepLink`; short timeout to Universal Link fallback
+- Android: custom scheme usually works well
+- WebViews: often require a user gesture to open external links
+- Desktop: prefer QR; provide a “Continue on mobile” Universal Link
 
 ## Fallback strategy
 
-- Not installed: show a QR option or direct users to download OneKey
-- No response: fallback to the Universal Link
-- Long URIs: reduce methods/events/chains to shorten the payload
+- Not installed: show QR or direct to download OneKey
+- No response: fallback to Universal Link
+- Long URI: reduce methods/events/chains to shorten
 
-## Related docs
+## Related
 
-- WalletConnect: connect-to-software/using-walletconnect/README.md
-- Web app integration (deeplinks): guides/web-app-integration-developer.md
 - OneKey Provider (EIP‑1193): connect-to-software/webapp-connect-onekey/README.md
-- Wallet Kit aggregators: connect-to-software/wallet-kit/README.md
+- Web app integration (deeplinks): guides/web-app-integration-developer.md

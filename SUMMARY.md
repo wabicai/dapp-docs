@@ -2,7 +2,8 @@
 
 * [Introduction](README.md)
 * [Connect to OneKey](connect-to-software/README.md)
-  * [JavaScript + OneKey Provider](connect-to-software/webapp-connect-onekey/README.md)
+  * [JavaScript (EIP-1193)](connect-to-software/webapp-connect-onekey/README.md)
+  * [React + wagmi](connect-to-software/webapp-connect-onekey/wagmi.md)
     * [ETH](connect-to-software/webapp-connect-onekey/eth/README.md)
       * [Provider API](connect-to-software/webapp-connect-onekey/eth/provider-api.md)
       * [RPC API](connect-to-software/webapp-connect-onekey/eth/rpc-api.md)
@@ -78,16 +79,6 @@
       * [Establishing a Connection](connect-to-software/webapp-connect-onekey/solana/establishing-a-connection.md)
       * [Sending a Transaction](connect-to-software/webapp-connect-onekey/solana/sending-a-transaction.md)
       * [Signing a Message](connect-to-software/webapp-connect-onekey/solana/signing-a-message.md)
-  * [JavaScript + MetaMask (Recommended)](connect-to-software/compatible-with-metamask/README.md)
-    * [detectEthereumProvider](connect-to-software/compatible-with-metamask/detectethereumprovider.md)
-* [Wallet Kit](connect-to-software/wallet-kit/README.md)
-  * [JavaScript + Web3 Onboard (EVM)](connect-to-software/wallet-kit/web3-onboard.md)
-  * [JavaScript + RainbowKit (EVM)](connect-to-software/wallet-kit/rainbowkit.md)
-  * [JavaScript + Web3Modal (EVM)](connect-to-software/wallet-kit/web3modal.md)
-  * [JavaScript + Aptos Wallet Adapter (Aptos)](connect-to-software/wallet-kit/aptos-wallet-adapter.md)
-  * [JavaScript + WalletConnect](connect-to-software/using-walletconnect/README.md)
-    * [ETH](connect-to-software/using-walletconnect/eth.md)
-* [Quick Start](quick-start.md)
 
 ## Guides
 

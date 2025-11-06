@@ -1,2 +1,35 @@
+---
+description: Bitcoin integration via OneKey’s injected BTC provider (window.$onekey.btc / window.unisat)
+---
+
 # BTC
 
+Integrate Bitcoin using OneKey’s injected BTC provider. Prefer `window.$onekey.btc`; fall back to `window.unisat` when needed.
+
+## Quick links
+
+- Guide: overview, install, detection, connect → guide.md
+- API Reference: all BTC methods → api-reference/README.md
+- Event: accountsChanged, networkChanged → event.md
+
+## Minimal pattern
+
+```js
+const provider = (window as any).$onekey?.btc || (window as any).unisat
+if (!provider) throw new Error('OneKey BTC provider not detected')
+await provider.requestAccounts()
+```
+
+## Events & network
+
+- `accountsChanged`, `networkChanged` — re‑sync account and network state
+
+## Common errors
+
+- User rejection: handle gracefully and allow retry
+- Invalid params: ensure addresses/amounts are correctly formatted
+
+## Mobile & deeplinks
+
+- Use OneKey deeplinks with a WalletConnect URI when bridging from mobile web/WebViews
+- See Guides → Use deeplinks

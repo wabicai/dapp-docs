@@ -1,34 +1,56 @@
 # Introduction
 
-This documentation helps you integrate OneKey software wallets into your dApp. It covers provider injection (EIP‑1193), wallet aggregators, WalletConnect, and per‑chain provider APIs (ETH, BTC, Solana, NEAR, Nostr, WebLN).
+This repository contains the official docs for integrating the OneKey software wallet into your dApp. The structure mirrors the MetaMask SDK docs: a single “Connect to OneKey” entry focused on the injected EIP‑1193 provider, plus per‑chain API references (ETH/EVM, BTC, Solana, NEAR, Nostr, WebLN).
 
-> Looking for hardware or Air‑Gap SDK? See the dedicated Hardware SDK docs: https://github.com/OneKeyHQ/hardware-sdk-docs
+> For hardware/Air‑Gap SDKs, see: https://github.com/OneKeyHQ/hardware-sdk-docs
 
-## Getting started
+## Quick start (browser/JavaScript)
 
-- Quick start: [Quick Start](quick-start.md)
-- Tutorials: [Developer Guide](guides/developer-guide.md), [Web App Integration Guide](guides/web-app-integration-developer.md)
+1) Install the OneKey browser extension or mobile app. In your dApp page, open DevTools and confirm `window.$onekey` exists.
 
-## Integration recipes
+2) Detect the provider and request accounts (EVM example):
 
-- Connect to OneKey: [Overview](connect-to-software/README.md)
-- JavaScript + MetaMask (Recommended): [Docs](connect-to-software/compatible-with-metamask/README.md)
-- JavaScript + OneKey Provider (pure JS): [Docs](connect-to-software/webapp-connect-onekey/README.md)
-- Wallet Kit: [Index](connect-to-software/wallet-kit/README.md)
-  - JavaScript + Web3 Onboard (EVM): [Guide](connect-to-software/wallet-kit/web3-onboard.md)
-  - JavaScript + RainbowKit (EVM): [Guide](connect-to-software/wallet-kit/rainbowkit.md)
-  - JavaScript + Web3Modal (EVM): [Guide](connect-to-software/wallet-kit/web3modal.md)
-  - JavaScript + Aptos Wallet Adapter (Aptos): [Guide](connect-to-software/wallet-kit/aptos-wallet-adapter.md)
-  - JavaScript + WalletConnect: [Guide](connect-to-software/using-walletconnect/README.md)
+```html
+<script>
+(async () => {
+  const provider = window?.$onekey?.ethereum
+    || window?.ethereum?.providers?.find(p => p?.isOneKey || p?.onekey)
+    || window?.ethereum;
+  if (!provider) {
+    console.warn('OneKey not detected. Install the extension and retry.');
+    return;
+  }
+  // Request accounts
+  const [account] = await provider.request({ method: 'eth_requestAccounts' });
+  console.log('Account:', account);
+  // Optional: send a sample tx
+  // const txHash = await provider.request({
+  //   method: 'eth_sendTransaction',
+  //   params: [{ from: account, to: '0x0000000000000000000000000000000000000001', value: '0x38d7ea4c68000' }]
+  // });
+  // console.log('Tx:', txHash);
+})();
+</script>
+```
+
+3) Continue per‑chain:
+
+- EVM: Provider API / RPC / accounts / transactions / signing → see “Connect to OneKey → ETH”
+- Others: see the chain sections (BTC/NEAR/Solana/Nostr/WebLN)
+
+## Integration entry points
+
+- Connect to OneKey (overview): `connect-to-software/README.md`
+- JavaScript (EIP‑1193): `connect-to-software/webapp-connect-onekey/README.md`
 
 ## API references
 
-- [Ethereum and EVM](connect-to-software/webapp-connect-onekey/eth/README.md)
-- [Bitcoin](connect-to-software/webapp-connect-onekey/btc/README.md)
-- [NEAR](connect-to-software/webapp-connect-onekey/near/README.md)
-- [Solana](connect-to-software/webapp-connect-onekey/solana/README.md)
-- [Nostr](connect-to-software/webapp-connect-onekey/nostr/README.md)
-- [WebLN](connect-to-software/webapp-connect-onekey/webln/README.md)
+- ETH/EVM: `connect-to-software/webapp-connect-onekey/eth/README.md`
+- Bitcoin: `connect-to-software/webapp-connect-onekey/btc/README.md`
+- NEAR: `connect-to-software/webapp-connect-onekey/near/README.md`
+- Solana: `connect-to-software/webapp-connect-onekey/solana/README.md`
+- Nostr: `connect-to-software/webapp-connect-onekey/nostr/README.md`
+- WebLN: `connect-to-software/webapp-connect-onekey/webln/README.md`
 
 ## Support
 

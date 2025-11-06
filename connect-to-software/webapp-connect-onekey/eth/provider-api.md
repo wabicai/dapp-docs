@@ -2,54 +2,21 @@
 
 OneKey Browser Extension injects a global API into websites visited by its users at `window.$onekey.ethereum`. This API allows websites to request users' Ethereum accounts, read data from blockchains the user is connected to, and suggest that the user sign messages and transactions. The presence of the provider object indicates an Ethereum user.
 
-The Ethereum JavaScript provider API is specified by [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193). For modern applications, it is highly recommended to use the [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) standard for discovering multiple wallet providers, which avoids conflicts between different browser extensions.
+The Ethereum JavaScript provider API is specified by [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193).
 
-### Provider Detection
+### Provider detection
 
-To ensure compatibility and a smooth user experience in a multi-wallet environment, it is highly recommended to detect providers using the **EIP-6963** standard.
-
-#### Recommended: EIP-6963 for Multi-Wallet Support
-
-OneKey fully supports **EIP-6963**, which allows dApps to discover multiple installed wallet providers without conflicts. This is the modern, recommended approach for all dApps.
+Use a OneKey‑first strategy to avoid multi‑wallet conflicts while remaining compatible with generic injected providers.
 
 ```javascript
-// This code snippet demonstrates how to listen for announced providers
-// and store them for your dApp to use.
+const provider = window?.$onekey?.ethereum
+  || window?.ethereum?.providers?.find((p) => p?.isOneKey || p?.onekey)
+  || window?.ethereum;
 
-let onekeyProvider = null;
-
-const onAnnounceProvider = (event) => {
-  // The event.detail contains the provider info and the provider object itself.
-  // event.detail = { info: { uuid, name, icon, rdns }, provider }
-  if (event.detail.info.name === 'OneKey') {
-    onekeyProvider = event.detail.provider;
-  }
-  // You can also store all providers in an array to let users choose.
-};
-
-// Listen for the announcement event from all wallets
-window.addEventListener('eip6963:announceProvider', onAnnounceProvider);
-
-// It's also good practice to dispatch a request event to prompt wallets
-// that may have loaded after the initial page load.
-window.dispatchEvent(new Event('eip6963:requestProvider'));
-
-// After a short delay, you can check if the onekeyProvider was found.
-setTimeout(() => {
-  if (onekeyProvider) {
-    startApp(onekeyProvider);
-  } else {
-    console.log('OneKey Wallet not found. Please install it from onekey.so/download');
-  }
-}, 500);
+if (!provider) {
+  throw new Error('OneKey provider not detected');
+}
 ```
-
-#### Legacy Detection & Provider Objects
-
-For compatibility with older dApps, OneKey also injects its provider into `window.ethereum`.
-
-* `window.ethereum`: This is the commonly used provider object. However, if a user has multiple wallets installed, this variable can be overwritten, leading to conflicts. OneKey injects here to maximize compatibility.
-* `window.$onekey.ethereum`: To avoid conflicts, OneKey also provides its provider via this private, namespaced variable. This ensures a dApp can specifically target OneKey if needed, though using EIP-6963 is preferred.
 
 ### Basic Usage
 
