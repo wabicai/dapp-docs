@@ -8,7 +8,7 @@ This section focuses on connecting to OneKey using the injected EIP‑1193 provi
   - Prefer `window.$onekey.ethereum`; fall back to `window.ethereum` as needed
   - Multi‑chain; see per‑chain sections for signing/transactions/events (ETH, BTC, Solana, NEAR, Nostr, WebLN)
 
-> Note: This section centers on the native provider flow based on EIP‑1193. If your app already uses Wallet Kits or needs MetaMask‑compat guidance, see “Support Wallet Kits” and “Compatible with MetaMask” in the navigation.
+> Note: This section centers on the native provider flow based on EIP‑1193. If your app already uses Wallet Kits or needs compatibility guidance, see “Support Wallet Kits” and “Compatible with MetaMask” in the navigation.
 
 ## Minimal example (EVM)
 

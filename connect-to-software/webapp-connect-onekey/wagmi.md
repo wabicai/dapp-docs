@@ -4,7 +4,7 @@ description: Connect to OneKey from React apps using wagmi and the injected EIP�
 
 # React + wagmi
 
-This page mirrors the structure of MetaMask’s wagmi guide and shows a minimal, EIP‑1193‑based way to connect OneKey from React apps using wagmi. Core idea: prefer OneKey’s dedicated injection (`window.$onekey.ethereum`), then fall back to multi‑provider list or generic `window.ethereum`.
+This guide shows a minimal, EIP‑1193‑based way to connect OneKey from React apps using wagmi. Core idea: prefer OneKey’s dedicated injection (`window.$onekey.ethereum`), then fall back to multi‑provider list or generic `window.ethereum`.
 
 ## Install
 
