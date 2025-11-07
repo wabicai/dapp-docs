@@ -1,10 +1,10 @@
 ---
-description: Manage networks (EVM) — detect, listen, switch and add chains (MetaMask-compatible)
+description: Manage networks (EVM) — detect, listen, switch and add chains (EIP‑1193 compatible)
 ---
 
 # Manage networks (EVM)
 
-This guide shows how to detect the current network, react to `chainChanged`, and request switching/adding networks via the EIP‑1193 provider. Behavior matches MetaMask.
+This guide shows how to detect the current network, react to `chainChanged`, and request switching/adding networks via the EIP‑1193 provider.
 
 ## Detect the current network
 

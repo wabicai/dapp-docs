@@ -10,8 +10,6 @@ If you’d like to jump to some working signature examples, [you can visit this 
 
 If you’d like to read our JavaScript implementations of these methods, they are all available in the npm package [eth-sig-util](https://github.com/onekeyhq/eth-sig-util).
 
-Note that OneKey supports signing transactions with Trezor and Ledger hardware wallets. These hardware wallets currently only support signing data using the `personal_sign` method. If you have trouble logging in to a website or dapp when using a Ledger or Trezor, the site may be requesting you sign data via an unsupported method, in which case we recommend using your standard OneKey account.
-
 ### A Brief History <a href="#a-brief-history" id="a-brief-history"></a>
 
 There are currently six signing methods in OneKey, and you might wonder the history of these methods. Studying the history of these methods has some lessons in it for the emergent lessons of decentralized standards emergence. Our current five methods are:
@@ -103,4 +101,3 @@ Below is an example of signing typed data with OneKey. Reference [here](https://
 #### Example <a href="#example" id="example"></a>
 
 {% embed url="https://codesandbox.io/embed/ethereum-provider-signdata-demo-67nn3q?autoresize=1&fontsize=14&hidenavigation=1&theme=dark" fullWidth="true" %}
-

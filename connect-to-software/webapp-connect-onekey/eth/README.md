@@ -4,7 +4,7 @@ description: Ethereum & EVM integration with OneKey’s injected EIP‑1193 prov
 
 # ETH / EVM
 
-Use the injected EIP‑1193 provider to build EVM dApps with OneKey. Behavior mirrors MetaMask. Start by detecting the provider and requesting accounts, then use the methods below for transactions and signing.
+Use the injected EIP‑1193 provider to build EVM dApps with OneKey. Start by detecting the provider and requesting accounts, then use the methods below for transactions and signing.
 
 ## Quick links
 

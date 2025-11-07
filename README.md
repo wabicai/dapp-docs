@@ -1,6 +1,6 @@
 # Introduction
 
-This repository contains the official docs for integrating the OneKey software wallet into your dApp. The structure mirrors the MetaMask SDK docs: a single “Connect to OneKey” entry focused on the injected EIP‑1193 provider, plus per‑chain API references (ETH/EVM, BTC, Solana, NEAR, Nostr, WebLN).
+This repository contains the official docs for integrating the OneKey software wallet into your dApp. The structure centers on the EIP‑1193 provider model: a single “Connect to OneKey” entry focused on the injected provider, plus per‑chain API references (ETH/EVM, BTC, Solana, NEAR, Nostr, WebLN).
 
 > For hardware/Air‑Gap SDKs, see: https://github.com/OneKeyHQ/hardware-sdk-docs
 

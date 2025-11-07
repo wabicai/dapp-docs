@@ -4,7 +4,7 @@ description: Authenticate users (EVM) — use EIP‑4361 (SIWE) or a nonce‑bas
 
 # Authenticate users (SIWE)
 
-Have users sign a “login statement” on the frontend, verify it on the backend, and establish a session (e.g., JWT). This mirrors MetaMask flows and works with OneKey.
+Have users sign a “login statement” on the frontend, verify it on the backend, and establish a session (e.g., JWT). This mirrors common EVM flows and works with OneKey.
 
 ## Flow
 

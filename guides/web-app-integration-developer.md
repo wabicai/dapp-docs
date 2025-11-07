@@ -15,6 +15,15 @@ This guide targets web/H5 dApps. It shows how to open OneKey from the browser us
 3) User approves in OneKey → receive a session
 4) Use per‑chain provider/RPC to interact with accounts
 
+## Client support matrix
+
+| Client | DApp support |
+| --- | --- |
+| OneKey Chrome extension | Use DApp to connect to OneKey in Chrome. |
+| OneKey Edge extension | Use DApp to connect to OneKey in Edge. |
+| OneKey Desktop (Windows, macOS, Linux) | Use DApp to connect via the built‑in browser on Desktop. |
+| OneKey Mobile (iOS, Android) | Use DApp to connect via the built‑in browser on Mobile. |
+
 ## Code template (EVM)
 
 ```ts

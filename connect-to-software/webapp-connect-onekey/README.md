@@ -1,6 +1,6 @@
 # JavaScript (EIP‑1193)
 
-Connect to OneKey via the injected EIP‑1193 provider. This mirrors MetaMask’s JavaScript flow and requires no extra SDK in the browser.
+Connect to OneKey via the injected EIP‑1193 provider. No extra SDK is required in the browser.
 
 ## Detect provider
 

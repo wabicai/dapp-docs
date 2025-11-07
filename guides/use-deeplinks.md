@@ -1,10 +1,10 @@
 ---
-description: Open OneKey with deeplinks across platforms using a WalletConnect URI (MetaMask-style, simplified)
+description: Open OneKey with deeplinks across platforms using a WalletConnect URI (standardized, simplified)
 ---
 
 # Use deeplinks
 
-This guide shows how to open the OneKey app from mobile web/WebViews using deeplinks that carry a WalletConnect URI. It mirrors the minimal pattern from MetaMask’s docs.
+This guide shows how to open the OneKey app from mobile web/WebViews using deeplinks that carry a WalletConnect URI. It follows a minimal, implementation‑agnostic pattern.
 
 - Where: mobile browsers, WebViews, React Native/Expo, Telegram Mini Apps, etc.
 - Always keep a fallback (Universal Link or QR)
@@ -58,6 +58,97 @@ const session = await approval();
 - Android: custom scheme usually works well
 - WebViews: often require a user gesture to open external links
 - Desktop: prefer QR; provide a “Continue on mobile” Universal Link
+
+## Platform configuration
+
+### iOS (Info.plist)
+
+```xml
+<key>CFBundleURLSchemes</key>
+<array>
+  <string>onekey-wallet</string>
+  <string>wc</string>
+  </array>
+
+<key>com.apple.developer.associated-domains</key>
+<array>
+  <string>applinks:app.onekey.so</string>
+</array>
+```
+
+### Android (AndroidManifest.xml)
+
+```xml
+<activity android:name=".MainActivity">
+  <!-- Deep Link -->
+  <intent-filter>
+    <action android:name="android.intent.action.VIEW" />
+    <category android:name="android.intent.category.DEFAULT" />
+    <category android:name="android.intent.category.BROWSABLE" />
+    <data android:scheme="onekey-wallet" />
+  </intent-filter>
+
+  <!-- Universal Link -->
+  <intent-filter android:autoVerify="true">
+    <action android:name="android.intent.action.VIEW" />
+    <category android:name="android.intent.category.DEFAULT" />
+    <category android:name="android.intent.category.BROWSABLE" />
+    <data android:scheme="https" android:host="app.onekey.so" android:pathPrefix="/wc" />
+  </intent-filter>
+</activity>
+```
+
+## Framework examples
+
+### React Native / Expo
+
+```ts
+import { Linking } from 'react-native';
+
+async function connectOneKey(wcUri: string) {
+  const deepLink = `onekey-wallet://wc?uri=${encodeURIComponent(wcUri)}`;
+  const canOpen = await Linking.canOpenURL(deepLink);
+  if (canOpen) {
+    await Linking.openURL(deepLink);
+  } else {
+    const universal = `https://app.onekey.so/wc/connect/wc?uri=${encodeURIComponent(wcUri)}`;
+    await Linking.openURL(universal);
+  }
+}
+```
+
+### Telegram Mini Apps
+
+```ts
+import { openLink } from '@telegram-apps/sdk'
+import { SignClient } from '@walletconnect/sign-client'
+
+async function connectWithOneKey() {
+  const client = await SignClient.init({
+    projectId: 'YOUR_PROJECT_ID',
+    metadata: {
+      name: 'My Telegram DApp',
+      description: 'Telegram Mini App',
+      url: 'https://t.me/your_bot',
+      icons: ['https://your-icon.png'],
+    },
+  })
+
+  const { uri, approval } = await client.connect({
+    requiredNamespaces: {
+      eip155: { methods: ['eth_sendTransaction', 'personal_sign'], chains: ['eip155:1'], events: ['chainChanged', 'accountsChanged'] },
+    },
+  })
+
+  if (uri) {
+    const deepLink = `onekey-wallet://wc?uri=${encodeURIComponent(uri)}`
+    openLink(deepLink)
+  }
+
+  const session = await approval()
+  return session
+}
+```
 
 ## Fallback strategy
 

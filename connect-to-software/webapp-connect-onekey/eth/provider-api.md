@@ -6,7 +6,33 @@ The Ethereum JavaScript provider API is specified by [EIP-1193](https://eips.eth
 
 ### Provider detection
 
-Use a OneKey‑first strategy to avoid multi‑wallet conflicts while remaining compatible with generic injected providers.
+Recommended: EIP‑6963 multi‑wallet detection (avoids conflicts when multiple extensions are installed)
+
+```js
+let onekeyProvider = null
+const providers = []
+
+function onAnnounceProvider(event) {
+  const { info, provider } = event.detail || {}
+  providers.push({ info, provider })
+  // Prefer OneKey explicitly
+  if (info?.name === 'OneKey' || info?.rdns?.includes('onekey')) {
+    onekeyProvider = provider
+  }
+}
+
+window.addEventListener('eip6963:announceProvider', onAnnounceProvider)
+window.dispatchEvent(new Event('eip6963:requestProvider'))
+
+// Later in your app init, pick a provider
+setTimeout(() => {
+  const picked = onekeyProvider || providers.find(p => p.info?.name)?.provider
+  if (!picked) console.warn('No wallet providers announced via EIP‑6963')
+  // startApp(picked)
+}, 300)
+```
+
+Fallback: OneKey‑first strategy to remain compatible with generic injected providers.
 
 ```javascript
 const provider = window?.$onekey?.ethereum

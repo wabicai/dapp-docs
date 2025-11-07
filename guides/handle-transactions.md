@@ -1,10 +1,10 @@
 ---
-description: Handle transactions (EVM) — estimate, send, wait for receipt, and handle errors
+description: Handle transactions (EVM) — estimate, send, wait for receipt, and handle errors (follows EIP‑1193 provider pattern)
 ---
 
 # Handle transactions (EVM)
 
-This guide shows a typical flow using the EIP‑1193 provider: prepare params → send → poll receipt → handle errors. The behavior aligns with MetaMask.
+This guide shows a typical flow using the EIP‑1193 provider: prepare params → send → poll receipt → handle errors.
 
 ## Transaction params (prefer EIP‑1559)
 

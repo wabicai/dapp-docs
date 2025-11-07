@@ -1,6 +1,6 @@
 # Connect to OneKey
 
-This section mirrors the MetaMask Connect/JavaScript category and keeps a single entry: connect to OneKey using the injected EIP‑1193 provider. No extra SDK is required for the web — detect and call the provider directly.
+This section focuses on connecting to OneKey using the injected EIP‑1193 provider. No extra SDK is required for the web — detect and call the provider directly.
 
 ## Recommended
 
@@ -8,7 +8,7 @@ This section mirrors the MetaMask Connect/JavaScript category and keeps a single
   - Prefer `window.$onekey.ethereum`; fall back to `window.ethereum` as needed
   - Multi‑chain; see per‑chain sections for signing/transactions/events (ETH, BTC, Solana, NEAR, Nostr, WebLN)
 
-> Note: To stay focused, we do not include separate navigation entries for WalletKit/WalletConnect or “MetaMask compatibility”. If your app already uses them, you can keep using them. This documentation centers on the native provider flow, aligned with MetaMask’s Connect/JavaScript.
+> Note: This section centers on the native provider flow based on EIP‑1193. If your app already uses Wallet Kits or needs MetaMask‑compat guidance, see “Support Wallet Kits” and “Compatible with MetaMask” in the navigation.
 
 ## Minimal example (EVM)
 

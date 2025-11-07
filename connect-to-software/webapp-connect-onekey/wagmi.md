@@ -1,10 +1,10 @@
 ---
-description: Connect to OneKey from React apps using wagmi and the injected EIP‑1193 provider (MetaMask‑style)
+description: Connect to OneKey from React apps using wagmi and the injected EIP‑1193 provider
 ---
 
 # React + wagmi
 
-This guide follows MetaMask’s `connect/javascript-wagmi` style while reflecting OneKey’s reality: OneKey injects an EIP‑1193 provider. We’ll configure wagmi to prefer OneKey’s provider (`window.$onekey.ethereum`) and gracefully fall back to other injected providers when needed.
+This page mirrors the structure of MetaMask’s wagmi guide and shows a minimal, EIP‑1193‑based way to connect OneKey from React apps using wagmi. Core idea: prefer OneKey’s dedicated injection (`window.$onekey.ethereum`), then fall back to multi‑provider list or generic `window.ethereum`.
 
 ## Install
 
@@ -12,7 +12,7 @@ This guide follows MetaMask’s `connect/javascript-wagmi` style while reflectin
 npm i wagmi viem
 ```
 
-wagmi v2 uses viem under the hood. We’ll use the Injected connector.
+wagmi v2 is built on viem. This guide uses the Injected connector to work with injected wallets (OneKey / other EIP‑1193 providers).
 
 ## Create a OneKey‑first injected connector
 
@@ -25,16 +25,16 @@ import { mainnet, polygon, arbitrum, base, optimism } from 'wagmi/chains'
 import { injected } from 'wagmi/connectors'
 
 function getOneKeyFirstProvider(): any {
-  // Prefer OneKey’s dedicated injection
+  // 1) Prefer OneKey’s dedicated injection
   const onekey = (window as any)?.$onekey?.ethereum
   if (onekey) return onekey
 
-  // Fallback: try multi-provider list
+  // 2) Fallback: find OneKey from multi-provider list
   const list = (window as any)?.ethereum?.providers
-  const okFromList = list?.find((p: any) => p?.isOneKey || p?.onekey)
+  const okFromList = list?.find((p: any) => p?.isOneKey || p?.onekey || (typeof p?.isOneKey === 'function' && p.isOneKey()))
   if (okFromList) return okFromList
 
-  // Final fallback: single injected provider
+  // 3) Final fallback: single injected provider
   return (window as any)?.ethereum
 }
 
@@ -63,8 +63,9 @@ export const config = createConfig({
 ```
 
 Notes
-- We intentionally prefer `window.$onekey.ethereum` so the dApp connects to OneKey even when multiple wallets are installed.
+- Prefer `window.$onekey.ethereum` to keep behavior deterministic in multi‑wallet environments.
 - If OneKey is not installed, the connector falls back to other injected providers.
+- Trigger `eth_requestAccounts` on a user gesture and handle `4001` (user rejected), as in the legacy docs.
 
 ## App setup
 
@@ -122,7 +123,7 @@ export default function App() {
 }
 ```
 
-## Sign and send (examples)
+## Sign and send
 
 ```ts
 import { createWalletClient, custom } from 'viem'
@@ -146,17 +147,37 @@ const txHash = await provider.request({
 
 ## Events and network
 
-- Listen to `accountsChanged` and `chainChanged`
-- For network switching and adding chains, use `wallet_switchEthereumChain` and `wallet_addEthereumChain` (same as MetaMask)
+- Listen to `accountsChanged` / `chainChanged` and refresh session state accordingly.
+- Network switching/adding: `wallet_switchEthereumChain` and `wallet_addEthereumChain`.
 
 ## Mobile and deeplinks
 
-- To bridge from mobile web or WebViews, use deeplinks carrying a WalletConnect URI
-- Prefer `onekey-wallet://wc?uri={encodeURIComponent(wcUri)}`; fallback to the Universal Link
-- See: Guides → Use deeplinks
+- For mobile or WebViews, use deeplinks carrying a WalletConnect URI.
+- Prefer `onekey-wallet://wc?uri={encodeURIComponent(wcUri)}`; fall back to the Universal Link.
+- See: Guides → Use deeplinks.
 
 ## Troubleshooting
 
-- 4001: user rejected
-- 4902: chain not added (switch to `wallet_addEthereumChain`)
-- Ensure hex strings are 0x‑prefixed; avoid passing raw BigInt in RPC params
+- 4001: user rejected (see legacy docs examples)
+
+## Optional: EIP‑6963 (multi‑wallet discovery)
+
+If desired, use EIP‑6963 to discover installed wallets first and prefer OneKey when available. Example:
+
+```ts
+let onekeyProvider: any = null
+const providers: any[] = []
+
+function onAnnounceProvider(event: any) {
+  const { info, provider } = event.detail || {}
+  providers.push({ info, provider })
+  if (info?.name === 'OneKey' || info?.rdns?.includes?.('onekey')) {
+    onekeyProvider = provider
+  }
+}
+
+window.addEventListener('eip6963:announceProvider', onAnnounceProvider)
+window.dispatchEvent(new Event('eip6963:requestProvider'))
+
+// Prefer `onekeyProvider` at app init; otherwise fall back to getOneKeyFirstProvider()
+```
