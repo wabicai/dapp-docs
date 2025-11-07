@@ -154,7 +154,7 @@ const txHash = await provider.request({
 
 - For mobile or WebViews, use deeplinks carrying a WalletConnect URI.
 - Prefer `onekey-wallet://wc?uri={encodeURIComponent(wcUri)}`; fall back to the Universal Link.
-- See: Guides → Use deeplinks.
+- See: [Use deeplinks](../../guides/use-deeplinks.md).
 
 ## Troubleshooting
 

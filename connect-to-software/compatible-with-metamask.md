@@ -32,10 +32,10 @@ When multiple extensions are installed, `window.ethereum` may be owned by differ
 
 If your app integrates a wallet kit, configure it to include/prioritize OneKey:
 
-- Web3 Onboard — connect-to-software/support-wallet-kit/web3-onboard.md
-- RainbowKit — connect-to-software/support-wallet-kit/rainbowkit.md
-- Web3Modal — connect-to-software/support-wallet-kit/web3modal.md
-- Aptos Wallet Adapter — connect-to-software/support-wallet-kit/aptos-wallet-adapter.md
+- [Web3 Onboard](support-wallet-kit/web3-onboard.md)
+- [RainbowKit](support-wallet-kit/rainbowkit.md)
+- [Web3Modal](support-wallet-kit/web3modal.md)
+- [Aptos Wallet Adapter](support-wallet-kit/aptos-wallet-adapter.md)
 
 ## Identify OneKey provider
 
@@ -49,6 +49,4 @@ if ((provider.isOneKey && provider.isOneKey()) || provider.isOneKey) {
 
 [EIP‑1193]: https://eips.ethereum.org/EIPS/eip-1193
 
-## Further reading
-
-- MetaMask Connect (JavaScript): https://docs.metamask.io/sdk/connect/javascript
+ 

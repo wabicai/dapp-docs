@@ -49,4 +49,4 @@ const wagmiConfig = createConfig({
 
 ## Related
 
-- React + wagmi (hooks-based integration): connect-to-software/webapp-connect-onekey/wagmi.md
+- React + wagmi (hooks-based integration): [Guide](../webapp-connect-onekey/wagmi.md)

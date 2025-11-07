@@ -158,5 +158,5 @@ async function connectWithOneKey() {
 
 ## Related
 
-- OneKey Provider (EIP‑1193): connect-to-software/webapp-connect-onekey/README.md
-- Web app integration (deeplinks): guides/web-app-integration-developer.md
+- OneKey Provider (EIP‑1193): [JavaScript (EIP‑1193)](../connect-to-software/webapp-connect-onekey/README.md)
+- Web app integration (deeplinks): [Guide](web-app-integration-developer.md)

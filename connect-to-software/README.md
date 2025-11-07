@@ -8,7 +8,7 @@ This section focuses on connecting to OneKey using the injected EIP‑1193 provi
   - Prefer `window.$onekey.ethereum`; fall back to `window.ethereum` as needed
   - Multi‑chain; see per‑chain sections for signing/transactions/events (ETH, BTC, Solana, NEAR, Nostr, WebLN)
 
-> Note: This section centers on the native provider flow based on EIP‑1193. If your app already uses Wallet Kits or needs compatibility guidance, see “Support Wallet Kits” and “Compatible with MetaMask” in the navigation.
+> Note: This section centers on the native provider flow based on EIP‑1193. If your app already uses Wallet Kits or needs compatibility guidance, see [Support Wallet Kits](support-wallet-kit/README.md) and [Compatible with MetaMask](compatible-with-metamask.md).
 
 ## Minimal example (EVM)
 
@@ -21,4 +21,4 @@ const [account] = await provider.request({ method: 'eth_requestAccounts' });
 console.log('Account:', account);
 ```
 
-See “JavaScript (EIP‑1193)” for details.
+See [JavaScript (EIP‑1193)](webapp-connect-onekey/README.md) for details.

@@ -40,17 +40,17 @@ This repository contains the official docs for integrating the OneKey software w
 
 ## Integration entry points
 
-- Connect to OneKey (overview): `connect-to-software/README.md`
-- JavaScript (EIP‑1193): `connect-to-software/webapp-connect-onekey/README.md`
+- [Connect to OneKey (overview)](connect-to-software/README.md)
+- [JavaScript (EIP‑1193)](connect-to-software/webapp-connect-onekey/README.md)
 
 ## API references
 
-- ETH/EVM: `connect-to-software/webapp-connect-onekey/eth/README.md`
-- Bitcoin: `connect-to-software/webapp-connect-onekey/btc/README.md`
-- NEAR: `connect-to-software/webapp-connect-onekey/near/README.md`
-- Solana: `connect-to-software/webapp-connect-onekey/solana/README.md`
-- Nostr: `connect-to-software/webapp-connect-onekey/nostr/README.md`
-- WebLN: `connect-to-software/webapp-connect-onekey/webln/README.md`
+- [ETH/EVM](connect-to-software/webapp-connect-onekey/eth/README.md)
+- [Bitcoin](connect-to-software/webapp-connect-onekey/btc/README.md)
+- [NEAR](connect-to-software/webapp-connect-onekey/near/README.md)
+- [Solana](connect-to-software/webapp-connect-onekey/solana/README.md)
+- [Nostr](connect-to-software/webapp-connect-onekey/nostr/README.md)
+- [WebLN](connect-to-software/webapp-connect-onekey/webln/README.md)
 
 ## Support
 

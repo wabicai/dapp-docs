@@ -6,7 +6,7 @@ description: Guides index for OneKey — authentication, networks, transactions,
 
 A curated set of production‑oriented guides to help you build with OneKey across platforms.
 
-- Web app onboarding: Web App Integration Guide (guides/web-app-integration-developer.md)
+- Web app onboarding: [Web app integration (deeplinks)](web-app-integration-developer.md)
 
 ## Topics
 

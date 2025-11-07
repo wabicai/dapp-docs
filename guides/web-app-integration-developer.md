@@ -6,7 +6,7 @@ description: Web/H5 deeplinks — open OneKey with a WalletConnect URI and provi
 
 This guide targets web/H5 dApps. It shows how to open OneKey from the browser using a deeplink that carries a WalletConnect URI, and how to design robust fallbacks across platforms.
 
-- Overview: guides/developer-guide.md
+- Overview: [Guides index](developer-guide.md)
 
 ## Flow
 
@@ -90,7 +90,7 @@ To keep this doc lean, we don’t provide a dedicated aggregator section. If you
 - EVM: use the EIP‑1193 provider (`eth_requestAccounts`, `eth_sendTransaction`, `personal_sign`, ...)
 - Other chains: use each chain’s provider/RPC
 
-Entry: connect-to-software/webapp-connect-onekey/README.md
+Entry: [JavaScript (EIP‑1193)](../connect-to-software/webapp-connect-onekey/README.md)
 
 ## Troubleshooting
 
