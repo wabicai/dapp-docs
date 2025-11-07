@@ -8,20 +8,20 @@ Build NEAR dApps with OneKey’s provider. Start with detection and connection, 
 
 ## Quick links
 
-- Introduction → introduction.md
-- Integrating → integrating/README.md
-  - Detecting the Provider → integrating/detecting-the-provider.md
-  - Establishing a Connection → integrating/establishing-a-connection.md
-  - Accessing Accounts → integrating/accessing-accounts.md
-  - Detecting Provider Network → integrating/detecting-provider-network.md
-  - Watch Accounts & Network Status → integrating/watch-accounts-and-network-status.md
-  - Sending Transactions → integrating/sending-transactions/README.md
-  - Signing Messages → integrating/signing-messages.md
-  - RPC API Calling → integrating/rpc-api-calling.md
-  - Debug Logging → integrating/debug-logging.md
-  - Migrate from Near Web Wallet → integrating/migrate-from-near-web-wallet.md
-- Reference → reference/README.md
-- Resources → resources/README.md
+- [Introduction](introduction.md)
+- [Integrating](integrating/README.md)
+  - [Detecting the Provider](integrating/detecting-the-provider.md)
+  - [Establishing a Connection](integrating/establishing-a-connection.md)
+  - [Accessing Accounts](integrating/accessing-accounts.md)
+  - [Detecting Provider Network](integrating/detecting-provider-network.md)
+  - [Watch Accounts & Network Status](integrating/watch-accounts-and-network-status.md)
+  - [Sending Transactions](integrating/sending-transactions/README.md)
+  - [Signing Messages](integrating/signing-messages.md)
+  - [RPC API Calling](integrating/rpc-api-calling.md)
+  - [Debug Logging](integrating/debug-logging.md)
+  - [Migrate from Near Web Wallet](integrating/migrate-from-near-web-wallet.md)
+- [Reference](reference/README.md)
+- [Resources](resources/README.md)
 
 ## Minimal pattern
 
@@ -47,4 +47,4 @@ await provider.request({ method: 'near_accounts' })
 ## Mobile & deeplinks
 
 - Use OneKey deeplinks to bridge from mobile H5/WebViews
-- See Guides → Use deeplinks
+- See [Use deeplinks](../../../guides/use-deeplinks.md)

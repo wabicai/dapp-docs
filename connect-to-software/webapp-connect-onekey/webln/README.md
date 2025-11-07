@@ -8,9 +8,9 @@ Use OneKey’s WebLN provider to interact with Lightning-enabled apps.
 
 ## Quick links
 
-- Guide → guide.md
-- API Reference → api-reference/README.md
-- Events → event.md
+- [Guide](guide.md)
+- [API Reference](api-reference/README.md)
+- [Events](event.md)
 
 ## Minimal pattern
 
@@ -24,7 +24,7 @@ const info = await provider.getInfo()
 
 ## Events
 
-- See Events page for account/network updates
+- See [Events](event.md) for account/network updates
 
 ## Common errors
 
@@ -34,4 +34,4 @@ const info = await provider.getInfo()
 ## Mobile & deeplinks
 
 - Use OneKey deeplinks to bridge from mobile H5/WebViews
-- See Guides → Use deeplinks
+- See [Use deeplinks](../../../guides/use-deeplinks.md)

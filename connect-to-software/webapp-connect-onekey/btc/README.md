@@ -8,9 +8,9 @@ Integrate Bitcoin using OneKey’s injected BTC provider. Prefer `window.$onekey
 
 ## Quick links
 
-- Guide: overview, install, detection, connect → guide.md
-- API Reference: all BTC methods → api-reference/README.md
-- Event: accountsChanged, networkChanged → event.md
+- [Guide](guide.md)
+- [API Reference](api-reference/README.md)
+- [Event](event.md)
 
 ## Minimal pattern
 
@@ -32,4 +32,4 @@ await provider.requestAccounts()
 ## Mobile & deeplinks
 
 - Use OneKey deeplinks with a WalletConnect URI when bridging from mobile web/WebViews
-- See Guides → Use deeplinks
+- See [Use deeplinks](../../../guides/use-deeplinks.md)

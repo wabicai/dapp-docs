@@ -8,10 +8,10 @@ Use OneKey’s Solana provider in web apps.
 
 ## Quick links
 
-- Detecting the Provider → detecting-the-provider.md
-- Establishing a Connection → establishing-a-connection.md
-- Sending a Transaction → sending-a-transaction.md
-- Signing a Message → signing-a-message.md
+- [Detecting the Provider](detecting-the-provider.md)
+- [Establishing a Connection](establishing-a-connection.md)
+- [Sending a Transaction](sending-a-transaction.md)
+- [Signing a Message](signing-a-message.md)
 
 ## Minimal pattern
 
@@ -36,4 +36,4 @@ console.log(publicKey.toString())
 ## Mobile & deeplinks
 
 - Use OneKey deeplinks with a WalletConnect URI for mobile handoff
-- See Guides → Use deeplinks
+- See [Use deeplinks](../../../guides/use-deeplinks.md)

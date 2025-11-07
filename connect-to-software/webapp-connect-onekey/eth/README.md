@@ -8,11 +8,11 @@ Use the injected EIP‑1193 provider to build EVM dApps with OneKey. Start by de
 
 ## Quick links
 
-- Provider API: provider lifecycle, detection, events → provider-api.md
-- RPC API: common JSON‑RPC calls → rpc-api.md
-- Accessing Accounts: request/connect flow → accessing-accounts.md
-- Sending Transactions: EIP‑1559 transaction flow → sending-transactions.md
-- Signing Data: personal_sign, EIP‑712 → signing-data.md
+- [Provider API](provider-api.md)
+- [RPC API](rpc-api.md)
+- [Accessing Accounts](accessing-accounts.md)
+- [Sending Transactions](sending-transactions.md)
+- [Signing Data](signing-data.md)
 
 ## Minimal pattern
 
@@ -38,6 +38,6 @@ const [account] = await provider.request({ method: 'eth_requestAccounts' })
 ## Mobile & deeplinks
 
 - Use OneKey deeplinks that carry a WalletConnect URI
-- See Guides → Use deeplinks
+- See [Use deeplinks](../../../guides/use-deeplinks.md)
 
-See also Connect → JavaScript (EIP‑1193) for an extended introduction.
+See also [JavaScript (EIP‑1193)](../README.md) for an extended introduction.

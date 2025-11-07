@@ -8,9 +8,9 @@ Integrate Nostr capabilities using OneKey’s provider.
 
 ## Quick links
 
-- Guide → guide.md
-- API Reference → api-reference/README.md
-- Events → event.md
+- [Guide](guide.md)
+- [API Reference](api-reference/README.md)
+- [Events](event.md)
 
 ## Minimal pattern
 
@@ -25,7 +25,7 @@ const pubkey = await provider.getPublicKey()
 
 ## Events
 
-- See Events page for account/network related updates
+- See [Events](event.md) for account/network related updates
 
 ## Common errors
 
@@ -35,4 +35,4 @@ const pubkey = await provider.getPublicKey()
 ## Mobile & deeplinks
 
 - Use OneKey deeplinks when bridging from mobile web/WebViews
-- See Guides → Use deeplinks
+- See [Use deeplinks](../../../guides/use-deeplinks.md)

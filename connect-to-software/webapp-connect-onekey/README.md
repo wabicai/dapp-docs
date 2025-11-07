@@ -63,9 +63,9 @@ await provider.request({ method: 'eth_signTypedData_v4', params: [account, JSON.
 
 ## Per‑chain docs
 
-- Ethereum / EVM → see `ETH` below
-- Bitcoin → see `BTC` below
-- NEAR → see `NEAR` below
-- Solana → see `SOLANA` below
-- Nostr → see `Nostr` below
-- WebLN → see `WebLN` below
+- [ETH / EVM](eth/README.md)
+- [Bitcoin](btc/README.md)
+- [NEAR](near/README.md)
+- [Solana](solana/README.md)
+- [Nostr](nostr/README.md)
+- [WebLN](webln/README.md)
