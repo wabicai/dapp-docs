@@ -85,11 +85,6 @@
     * [RainbowKit](connect-to-software/support-wallet-kit/rainbowkit.md)
     * [Web3Modal](connect-to-software/support-wallet-kit/web3modal.md)
     * [Aptos Wallet Adapter](connect-to-software/support-wallet-kit/aptos-wallet-adapter.md)
-    * [SOLANA](connect-to-software/webapp-connect-onekey/solana/README.md)
-      * [Detecting the Provider](connect-to-software/webapp-connect-onekey/solana/detecting-the-provider.md)
-      * [Establishing a Connection](connect-to-software/webapp-connect-onekey/solana/establishing-a-connection.md)
-      * [Sending a Transaction](connect-to-software/webapp-connect-onekey/solana/sending-a-transaction.md)
-      * [Signing a Message](connect-to-software/webapp-connect-onekey/solana/signing-a-message.md)
 
 ## Guides
 
